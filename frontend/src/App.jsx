@@ -4,7 +4,7 @@ import "./App.css";
 
 export default function App() {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Hello! How can I help you?" },
+    { role: "assistant", content: "Hello! How can I help you today?" },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,16 +20,24 @@ export default function App() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: updatedMessages }),
-      });
+      const res = await fetch(
+        "https://ai-chat-gilt-sigma.vercel.app/api/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: updatedMessages }),
+        }
+      );
 
       const data = await res.json();
 
       if (data?.reply) {
         setMessages((prev) => [...prev, data.reply]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "No reply from server." },
+        ]);
       }
     } catch (err) {
       setMessages((prev) => [
