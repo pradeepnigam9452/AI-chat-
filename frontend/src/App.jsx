@@ -21,7 +21,7 @@ export default function App() {
 
     try {
       const res = await fetch(
-        "https://ai-chat-gilt-sigma.vercel.app/api/chat",
+        "https://ai-chat-gilt-sigma.vercel.app/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
